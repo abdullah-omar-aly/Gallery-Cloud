@@ -1,32 +1,22 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
 import './App.css'
+import { Route, Routes } from "react-router-dom"
+import LoginPage from './pages/LoginPage'
+import ProfilePage from './pages/ProfilePage'
+import PrivateRoute from './auth/PrivateRoute'
+import { useAuth } from './auth/AuthContext'
+import HomePage from './pages/HomePage'
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  const auth = useAuth()
+  console.log(auth.user)
   return (
     <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <h1 className="read-the-docs">
-          Cloud Gallery Amazing app
-      </h1>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path='/login' element={<LoginPage />} />
+        <Route path='/profile' element={<PrivateRoute element={<ProfilePage />}/>} />
+        {/* <Route path='/profile' element={<PrivateRoute><ProfilePage /></PrivateRoute>} /> */}
+      </Routes>
     </div>
   )
 }
